@@ -1,1 +1,1 @@
-This is working version of Keith project under debugger.
+this is a sample of Linux WSL project can me run under as Debug as Release options
