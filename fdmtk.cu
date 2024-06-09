@@ -103,8 +103,8 @@ int main(int argc, char* argv[])
 {
 	/*int nd = 1024;
 	int nt = 512;*/
-	int nd =2048;
-	int nt = 4096; 
+	int nd =512;
+	int nt = 512; 
 	float seek_seconds = 0.0;
 	int num_rescale_blocks = 2;
 	float decay_timescale = 0.2; // Seconds?

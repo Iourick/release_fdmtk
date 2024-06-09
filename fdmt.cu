@@ -512,7 +512,7 @@ int fdmt_initialise_gpu(const fdmt_t* fdmt, const array4d_t* indata, array4d_t* 
 	//fdmt_initialise_kernel<<<fdmt->nbeams, fdmt->nf>>>(indata->d_device, state->d_device, fdmt->delta_t, fdmt->max_dt, fdmt->nt);
 	int nthreads = 256;
 	fdmt_initialise_kernel2<<<grid_shape, nthreads>>>(indata->d_device, state->d_device, fdmt->delta_t, fdmt->max_dt, fdmt->nt, count);
-	gpuErrchk(cudaDeviceSynchronize());
+	//gpuErrchk(cudaDeviceSynchronize());
 
 	return 0;
 
@@ -1141,7 +1141,7 @@ int fdmt_execute_iterations(fdmt_t* fdmt)
 		//fdmt_iteration(fdmt, iter, currstate, newstate);
 		cuda_fdmt_iteration4(fdmt, iter, currstate, newstate);
 		gpuErrchk(cudaPeekAtLastError());
-		gpuErrchk(cudaDeviceSynchronize());
+		//gpuErrchk(cudaDeviceSynchronize());
 #ifdef DUMP_STATE
 		char buf[128];
 		array4d_copy_to_host(newstate);
