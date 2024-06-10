@@ -458,13 +458,12 @@ int main(int argc, char* argv[])
 			auto start = std::chrono::high_resolution_clock::now();
 			for (int i = 0; i < num; ++i)
 			{
-				fdmt_pravir.execute(parrImage, 0, parrImOut, 0);
-				int gg = 0;
+				fdmt_pravir.execute(rescale_buf.d_device, 0, parrImOut, 0);				
 			}
 			
 			auto end = std::chrono::high_resolution_clock::now();
 			auto duration = std::chrono::duration_cast<std::chrono::microseconds>(end - start);
-			std::cout << "Pravir:    "  << "  Time taken by function FDMT : " << duration.count() / ((double)num) << " microseconds" << std::endl;
+			std::cout << "Pravir:    "  << duration.count() / ((double)num) << " microseconds" << std::endl;
 			cudaFree(parrImage);
 			cudaFree(parrImOut);
 			start = std::chrono::high_resolution_clock::now();
@@ -474,7 +473,7 @@ int main(int argc, char* argv[])
 			}
 			end = std::chrono::high_resolution_clock::now();
 			duration = std::chrono::duration_cast<std::chrono::microseconds>(end - start);
-			std::cout << "Keith:    "  << "  Time taken by function fncFdmtU_cu : " << duration.count() / ((double)num) << " microseconds" << std::endl;
+			std::cout << "Keith:    "  << duration.count() / ((double)num) << " microseconds" << std::endl;
 			break;
 
 
