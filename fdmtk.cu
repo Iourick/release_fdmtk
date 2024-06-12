@@ -103,7 +103,7 @@ int main(int argc, char* argv[])
 {
 	/*int nd = 1024;
 	int nt = 512;*/
-	int nd =512;
+	int nd =1024;
 	int nt = 512; 
 	float seek_seconds = 0.0;
 	int num_rescale_blocks = 2;
@@ -440,20 +440,21 @@ int main(int argc, char* argv[])
 		}
 
 
-		FDMTGPU fdmt_pravir(fdmt.fmin, fdmt.fmax, static_cast<unsigned long>(fdmt.nf), static_cast<unsigned long>(fdmt.nt), 0.0f,
-			static_cast<unsigned long>(fdmt.max_dt) -1,  1,  0);
 		
-		int iImCols = fdmt.nt;
-		int iImRows = fdmt.nf;
-		int IOutImageRows = static_cast<unsigned long>(fdmt.max_dt);
-		float* parrImage = NULL;
-		float* parrImOut = NULL;
-		cudaMalloc(&parrImage, sizeof(float) * iImRows * iImCols);
-		
-		cudaMalloc(&parrImOut, iImCols * IOutImageRows * sizeof(float));
-		if (blocknum >= num_rescale_blocks) {
+		if (blocknum >= num_rescale_blocks)
+		{
 			/// Execute the FDMT
+			FDMTGPU fdmt_pravir(fdmt.fmin, fdmt.fmax, static_cast<unsigned long>(fdmt.nf), static_cast<unsigned long>(fdmt.nt) * 3, 0.0f,
+				static_cast<unsigned long>(fdmt.max_dt) - 1, 1, 0);
 
+			int iImCols = fdmt.nt*3;
+			int iImRows = fdmt.nf;
+			int IOutImageRows = static_cast<unsigned long>(fdmt.max_dt);
+			float* parrImage = NULL;
+			float* parrImOut = NULL;
+			cudaMalloc(&parrImage, sizeof(float) * iImRows * iImCols );
+
+			cudaMalloc(&parrImOut, iImCols * IOutImageRows * sizeof(float));
 			int num = 100;
 			auto start = std::chrono::high_resolution_clock::now();
 			for (int i = 0; i < num; ++i)
